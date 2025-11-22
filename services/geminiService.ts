@@ -159,13 +159,23 @@ export const resolveRound = async (scenarioContext: string, userAction: string, 
     // 2. Generate Image Response (Imagen)
     let imageUrl: string | undefined;
     try {
+      // Extremely aggressive No-Text Prompt
       const imagePrompt = `
-        Digital illustration in a clean, humorous cartoon style.
-        Visual Style: Bold black outlines, flat vibrant colors, caricature proportions (slightly big heads, expressive faces), similar to pop-culture fan art by Chris Casson.
-        Subject: The character "${data.character}" from "${data.movie}" (${data.director}) dealing with the situation: "${scenarioContext}".
-        Setting: Minimalist background or simple props relevant to the mundane task.
-        Vibe: Funny, ironic, "chibi" or cartoonish version of a serious movie character.
-        No text, no speech bubbles.
+        CRITICAL RULE: NO TEXT. NO WORDS. NO LETTERS. NO NUMBERS. NO SPEECH BUBBLES. NO SUBTITLES.
+        The image must be a pure, text-free animation frame.
+
+        Style: Adult Swim surreal 2D animation (similar to Smiling Friends, Superjail, Rick and Morty, Mr. Pickles).
+        Visuals: Flat shading, bold black outlines, vibrant/acid colors, slightly grotesque or exaggerated character design.
+        Atmosphere: Absurd, chaotic, cynical, funny.
+
+        Subject: The character "${data.character}" from the movie "${data.movie}".
+        Context: The character is inside a mundane environment: "${scenarioContext}".
+        Action: The character is doing this: "${userAction}".
+
+        Composition: A high-quality animation keyframe.
+        Visual features: Expressive faces, weird background details.
+        
+        Again: DO NOT INCLUDE ANY TEXT OR TYPOGRAPHY IN THE IMAGE.
       `;
 
       const imageResponse = await ai.models.generateImages({
